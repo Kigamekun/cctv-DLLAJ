@@ -48,3 +48,11 @@
         footer{
           background-color: #011627;
         }
+
+.btn-play{
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}

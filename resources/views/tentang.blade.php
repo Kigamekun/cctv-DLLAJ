@@ -12,7 +12,7 @@
                             Tentang Kami
                         </h1>
 
-                        <p class="lead text-muted mb-7 mb-md-5">
+                        <p class="lead text-muted mb-7 mb-md-5 mt-4">
                             Kami Dishub Kota BOGOR mempersembahkan CCTV yang ter-integrasi dengan Website, untuk memudahkan
                             masyarakat dalam memantau kondisi lalu lintas di kota BOGOR. </p>
 

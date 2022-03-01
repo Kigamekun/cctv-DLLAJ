@@ -42,15 +42,44 @@
             </div>
             <!-- end judul -->
 
-
             <!-- cctv card -->
             <div class="row mt-5">
                 @foreach ($data as $item)
-                    <div class="col-md-6 mb-5" data-aos="zoom-in" data-aos-duration="2000">
+                    <div class="col-md-6 mb-5">
                         <div class="card border-0 shadow-sm" style="width: 100%; border-radius: 10px;">
-                            <div class="ratio ratio-16x9">
-                                <video id="video{{ $item->id }}" src="{{ $item->link }}" controls width="200px"
-                                    height="200px"></video>
+                            <div class="">
+
+                                <div class="thum">
+                                    <img src="assets/img/thumb.png" class="img-fluid w-100" style="height: 300px;" alt="">
+                                    <button href="" class="btn btn-primary btn-play btn-lg" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bi bi-play-fill"></i></button>
+                                </div>
+
+                                <div class="modal" id="myModal">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content">
+                                
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                        <h4 class="modal-title">{{ $item->lokasi }}</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="videocctv ratio ratio-16x9">
+                                                <video id="video{{ $item->id }}" src="{{ $item->link }}" controls width="200px" height="200px"></video> 
+                                            </div>
+                                        </div>
+                                
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                                        </div>
+                                
+                                    </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="card-body p-4">
                                 <p class="card-text text-muted text-uppercase" style="font-size: 15px;">{{ $item->owner }}

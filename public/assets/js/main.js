@@ -41,3 +41,7 @@ AOS.init();
 
 
       map.on('click', onMapClick);
+
+
+      var btnContain = document.getElementById("nav-item")
+      var btn = btnContain.getElementsByClassName("nav-link")

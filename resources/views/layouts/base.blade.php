@@ -36,7 +36,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse " id="navbarNav">
-                    <ul class="navbar-nav ms-auto mt-1">
+                    <ul class="navbar-nav ms-auto mt-1" id="nav">
                         <li class="nav-item">
                             <a class="nav-link text-uppercase active" aria-current="page" href="{{ route('index') }}">Beranda</a>
                         </li>
