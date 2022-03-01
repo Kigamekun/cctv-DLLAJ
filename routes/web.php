@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Streaming\Representation;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('index');
+    $data = DB::table('cctv')->limit(4)->get();
+    return view('index',['data'=>$data]);
 })->name('index');
 
 
@@ -34,3 +38,9 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+
+Route::get('/test', function () {
+
+    return view('stream');
+
+})->name('test');

@@ -2,6 +2,7 @@
 
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <main class="container justify-content-center align-items-center">
         <div class="p-5">
 
@@ -44,82 +45,21 @@
 
             <!-- cctv card -->
             <div class="row mt-5">
-                <div class="col-md-6 mb-5" data-aos="zoom-in" data-aos-duration="2000">
-                    <div class="card border-0 shadow-sm" style="width: 100%; border-radius: 10px;">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/e8CLsYzE5wk" title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="card-body p-4">
-                            <p class="card-text text-muted text-uppercase" style="font-size: 15px;">bogor selatan</p>
-                            <p class="card-title  fs-4">Jalan Air mancur</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-5" data-aos="zoom-in" data-aos-duration="2000">
-                    <div class="card border-0 shadow-sm" style="width: 100%; border-radius: 10px;">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/e8CLsYzE5wk" title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="card-body p-4">
-                            <p class="card-text text-muted text-uppercase" style="font-size: 15px;">bogor timur</p>
-                            <p class="card-title  fs-4">Kebun Raya</p>
+                @foreach ($data as $item)
+                    <div class="col-md-6 mb-5" data-aos="zoom-in" data-aos-duration="2000">
+                        <div class="card border-0 shadow-sm" style="width: 100%; border-radius: 10px;">
+                            <div class="ratio ratio-16x9">
+                                <video id="video{{ $item->id }}" src="{{ $item->link }}" controls width="200px"
+                                    height="200px"></video>
+                            </div>
+                            <div class="card-body p-4">
+                                <p class="card-text text-muted text-uppercase" style="font-size: 15px;">{{ $item->owner }}
+                                </p>
+                                <p class="card-title  fs-4">{{ $item->lokasi }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-5" data-aos="zoom-in" data-aos-duration="2000">
-                    <div class="card border-0 shadow-sm" style="width: 100%; border-radius: 10px;">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/e8CLsYzE5wk" title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="card-body p-4">
-                            <p class="card-text text-muted text-uppercase" style="font-size: 15px;">bogor selatan</p>
-                            <p class="card-title  fs-4">Jalan Tajur</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-5" data-aos="zoom-in" data-aos-duration="2000">
-                    <div class="card border-0 shadow-sm" style="width: 100%; border-radius: 10px;">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/e8CLsYzE5wk" title="YouTube video player"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen></iframe>
-                        </div>
-                        <div class="card-body p-4">
-                            <p class="card-text text-muted text-uppercase" style="font-size: 15px;">bogor utara</p>
-                            <p class="card-title  fs-4">Jalan Sukasari</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- pagination -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- end pagination -->
+                @endforeach
 
             </div>
             <!-- end cctv card -->
@@ -127,4 +67,29 @@
 
         </div>
     </main>
+@endsection
+
+
+@section('js')
+    <script>
+        if (Hls.isSupported()) {
+            @foreach ($data as $item)
+                var video = document.getElementById('video{{ $item->id }}');
+                var hls = new Hls();
+                hls.loadSource('{{ $item->link }}');
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+                });
+            @endforeach
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+
+            @foreach ($data as $item)
+                video.src = '{{ $item->link }}';
+                video.addEventListener('canplay', function() {
+                video.play();
+                });
+            @endforeach
+        }
+    </script>
 @endsection
