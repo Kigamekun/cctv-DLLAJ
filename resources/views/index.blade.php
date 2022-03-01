@@ -63,7 +63,7 @@
 
             </div>
             <!-- end cctv card -->
-
+            {{ $data->links() }}
 
         </div>
     </main>
@@ -92,4 +92,11 @@
             @endforeach
         }
     </script>
+
+
+
+<script>
+
+
+</script>
 @endsection

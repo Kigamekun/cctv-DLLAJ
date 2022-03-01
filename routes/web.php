@@ -5,6 +5,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Streaming\Representation;
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Cctv;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 
 Route::get('/', function () {
-    $data = DB::table('cctv')->limit(4)->get();
+    $data = Cctv::paginate(6);
     return view('index',['data'=>$data]);
 })->name('index');
 
