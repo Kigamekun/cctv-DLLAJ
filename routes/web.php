@@ -18,7 +18,6 @@ use App\Models\Cctv;
 |
 */
 
-
 Route::get('/', function () {
     $data = Cctv::paginate(6);
     return view('index',['data'=>$data]);
@@ -40,15 +39,14 @@ Route::get('/kontak', function () {
     return view('kontak');
 })->name('kontak');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
-
-
 Route::get('/test', function () {
 
     return view('stream');
 
 })->name('test');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
