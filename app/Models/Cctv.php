@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Cctv extends Model
 {
     protected $table = 'cctv';
+    protected $fillable = ['owner','ip_address','lokasi','status','link'];
     use HasFactory;
 }

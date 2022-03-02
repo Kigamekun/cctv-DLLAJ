@@ -5,7 +5,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Streaming\Representation;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\CctvController;
 use App\Models\Cctv;
 /*
 |--------------------------------------------------------------------------
@@ -50,3 +50,16 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+
+Route::prefix('cctv')->name('cctv.')->group(function () {
+    // crud routing
+    Route::get('/', [CctvController::class,'index'])->name('index');
+    Route::get('/create', [CctvController::class,'create'])->name('create');
+    Route::post('/store', [CctvController::class,'store'])->name('store');
+    Route::get('/{id}/edit', [CctvController::class,'edit'])->name('edit');
+    Route::post('/{id}/update', [CctvController::class,'update'])->name('update');
+    Route::get('/{id}/delete', [CctvController::class,'destroy'])->name('delete');
+
+
+});
