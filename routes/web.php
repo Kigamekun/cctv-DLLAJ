@@ -51,7 +51,7 @@ Route::get('/dashboard', function () {
 
 
 Route::get('/data_geo', function () {
-    $data = Cctv::all();
+    $data = Cctv::where('latitude','!=',NULL)->where('longitude', '!=', NULL)->get();
     return response()->json($data, 200);
 })->name('data_geo');
 
@@ -68,7 +68,5 @@ Route::prefix('cctv')->name('cctv.')->group(function () {
     Route::get('/{id}/edit', [CctvController::class,'edit'])->name('edit');
     Route::post('/{id}/update', [CctvController::class,'update'])->name('update');
     Route::get('/{id}/delete', [CctvController::class,'destroy'])->name('delete');
-
-
 });
 
