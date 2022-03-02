@@ -25,6 +25,12 @@ Route::get('/', function () {
 })->name('index');
 
 
+Route::get('/search_cctv', function () {
+    $data = Cctv::where('lokasi','LIKE','%'.$_GET['search'].'%')->paginate(6);
+    return view('index',['data'=>$data]);
+})->name('search_cctv');
+
+
 
 Route::get('/tentang', function () {
     return view('tentang');

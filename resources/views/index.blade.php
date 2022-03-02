@@ -31,8 +31,9 @@
                 <div class="col-md-6 ms-auto mt-4">
                     <!-- search -->
                     <div class="search">
-                        <form class="d-flex w-100 ">
-                            <input class="form-control me-2" type="search" placeholder="Cari cctv" aria-label="Search">
+                        <form action="{{ route('search_cctv') }}" class="d-flex w-100 ">
+                            @csrf
+                            <input class="form-control me-2" type="search" name="search" placeholder="Cari cctv" aria-label="Search">
                             <button class="btn btn-outline-dark" type="submit" style="border-radius: 10px;"><i
                                     class="bi bi-search"></i></button>
                         </form>
@@ -51,33 +52,10 @@
 
                                 <div class="thum">
                                     <img src="assets/img/thumb.png" class="img-fluid w-100" style="height: 300px;" alt="">
-                                    <button href="" class="btn btn-primary btn-play btn-lg" data-bs-toggle="modal" data-bs-target="#myModal"><i class="bi bi-play-fill"></i></button>
-                                </div>
-
-                                <div class="modal" id="myModal">
-                                    <div class="modal-dialog">
-                                    <div class="modal-content">
-                                
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                        <h4 class="modal-title">{{ $item->lokasi }}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <div class="videocctv ratio ratio-16x9">
-                                                <video id="video{{ $item->id }}" src="{{ $item->link }}" controls width="200px" height="200px"></video> 
-                                            </div>
-                                        </div>
-                                
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                                        </div>
-                                
-                                    </div>
-                                    </div>
+                                    <button class="btn btn-primary btn-play btn-lg" data-bs-toggle="modal"
+                                        data-bs-target="#myModal" data-src="{{ $item->link }}"
+                                        data-id="{{ $item->id }}" data-lokasi="{{ $item->lokasi }}"><i
+                                            class="bi bi-play-fill"></i></button>
                                 </div>
 
                             </div>
@@ -96,36 +74,77 @@
 
         </div>
     </main>
+
+
+
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal-content">
+                Loading ...
+            </div>
+        </div>
+    </div>
 @endsection
 
 
 @section('js')
-    <script>
-        if (Hls.isSupported()) {
-            @foreach ($data as $item)
-                var video = document.getElementById('video{{ $item->id }}');
-                var hls = new Hls();
-                hls.loadSource('{{ $item->link }}');
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play();
-                });
-            @endforeach
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
 
-            @foreach ($data as $item)
-                video.src = '{{ $item->link }}';
-                video.addEventListener('canplay', function() {
+
+<script>
+    function playVid(id, lokasi, src) {
+        if (Hls.isSupported()) {
+
+            var video = document.getElementById('video'+id);
+            var hls = new Hls();
+            hls.loadSource(src);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
                 video.play();
-                });
-            @endforeach
+            });
+
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = src;
+            video.addEventListener('canplay', function() {
+                video.play();
+            });
+
         }
+    }
+</script>
+    <script>
+        $('.modal').on('shown.bs.modal', function(e) {
+            var html = `
+
+
+            <div class="modal-header">
+            <h4 class="modal-title">${$(e.relatedTarget).data('lokasi')}</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="videocctv ratio ratio-16x9">
+                    <video id="video${$(e.relatedTarget).data('id')}" src="${$(e.relatedTarget).data('src')}" controls width="200px" height="200px"></video>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+            </div>
+
+    `;
+
+
+            $('#modal-content').html(html);
+            playVid($(e.relatedTarget).data('id'), $(e.relatedTarget).data('lokasi'), $(e.relatedTarget).data('src'));
+
+        });
     </script>
 
 
 
-<script>
+
+    <script>
 
 
-</script>
+    </script>
 @endsection
