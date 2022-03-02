@@ -52,8 +52,10 @@ class CctvController extends Controller
             'ip_address' => $request->ip_address,
 
             'lokasi' => $request->lokasi,
-
+            'status' => $request->status ? 1 : 0,
             'link' => $request->link,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
 
         ]);
 
@@ -105,8 +107,10 @@ class CctvController extends Controller
                 'owner' => $request->owner,
                 'ip_address' => $request->ip_address,
                 'lokasi' => $request->lokasi,
-
+                'status' => $request->status ? 1 : 0,
                 'link' => $request->link,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
             ]);
 
 

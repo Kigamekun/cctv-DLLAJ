@@ -49,6 +49,14 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+Route::get('/data_geo', function () {
+    $data = Cctv::all();
+    return response()->json($data, 200);
+})->name('data_geo');
+
+
+
 require __DIR__.'/auth.php';
 
 
@@ -63,3 +71,4 @@ Route::prefix('cctv')->name('cctv.')->group(function () {
 
 
 });
+

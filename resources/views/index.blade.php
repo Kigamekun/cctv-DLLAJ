@@ -33,7 +33,8 @@
                     <div class="search">
                         <form action="{{ route('search_cctv') }}" class="d-flex w-100 ">
                             @csrf
-                            <input class="form-control me-2" type="search" name="search" placeholder="Cari cctv" aria-label="Search">
+                            <input class="form-control me-2" type="search" name="search" placeholder="Cari cctv"
+                                aria-label="Search">
                             <button class="btn btn-outline-dark" type="submit" style="border-radius: 10px;"><i
                                     class="bi bi-search"></i></button>
                         </form>
@@ -88,29 +89,27 @@
 
 
 @section('js')
+    <script>
+        function playVid(id, lokasi, src) {
+            if (Hls.isSupported()) {
 
+                var video = document.getElementById('video' + id);
+                var hls = new Hls();
+                hls.loadSource(src);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    video.play();
+                });
 
-<script>
-    function playVid(id, lokasi, src) {
-        if (Hls.isSupported()) {
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+                video.addEventListener('canplay', function() {
+                    video.play();
+                });
 
-            var video = document.getElementById('video'+id);
-            var hls = new Hls();
-            hls.loadSource(src);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play();
-            });
-
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = src;
-            video.addEventListener('canplay', function() {
-                video.play();
-            });
-
+            }
         }
-    }
-</script>
+    </script>
     <script>
         $('.modal').on('shown.bs.modal', function(e) {
             var html = `
@@ -135,7 +134,8 @@
 
 
             $('#modal-content').html(html);
-            playVid($(e.relatedTarget).data('id'), $(e.relatedTarget).data('lokasi'), $(e.relatedTarget).data('src'));
+            playVid($(e.relatedTarget).data('id'), $(e.relatedTarget).data('lokasi'), $(e.relatedTarget).data(
+                'src'));
 
         });
     </script>
@@ -144,7 +144,56 @@
 
 
     <script>
+        AOS.init();
+
+        var map = L.map('map').setView([-6.588197, 106.8021882], 14);
+
+        var tiles = L.tileLayer(
+            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(map);
+
+        var LeafIcon = L.Icon.extend({
+            options: {
+                iconSize: [40, 40],
+                shadowSize: [50, 64],
+                iconAnchor: [22, 94],
+                shadowAnchor: [4, 62],
+                popupAnchor: [-3, -76]
+            }
+        });
+
+        var cctvIcon = new LeafIcon({
+            iconUrl: '{{ url("assets/img/cctv.png") }}'
+        });
 
 
+        $.ajax({
+
+            type: 'GET',
+
+            url: "{{ route('data_geo') }}",
+
+
+            success: function(data) {
+                // console.log(data);
+                var dt = data;
+                dt.forEach(element => {
+                    var marker = L.marker([element.latitude, element.longitude], {
+                        icon: cctvIcon
+                    }).bindPopup('Terpantau').addTo(map);
+
+
+                });
+
+
+            }
+
+        });
     </script>
 @endsection
