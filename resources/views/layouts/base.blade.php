@@ -31,7 +31,7 @@
                         class="d-inline-block align-text-top">
                     DLLAJ KOTA BOGOR
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -55,7 +55,7 @@
 
     @yield('content')
 
-    <footer class="position-relative mt-5 border">
+    <footer class="position-relative mt-5">
         <div class="text-center text-white p-3 ">
             <a class="navbar-brand fw-bold fs-3" href="#">
                 <img src="{{ url('assets/img/logo.png') }}" style="object-fit: cover;" alt="" width="35" height="35"

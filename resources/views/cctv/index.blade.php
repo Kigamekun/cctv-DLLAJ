@@ -3,6 +3,11 @@
 @section('css')
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+    </style>
 @endsection
 
 
@@ -19,11 +24,7 @@
 
 @section('content')
     <div class="card">
-
-
         <div class="card-body">
-
-
 
             <br>
             @if (Session::has('message'))
@@ -44,7 +45,9 @@
 
 
 
-            <table id="example" class="table table-striped" style="width:100%">
+           <div class="row justify-content-center">
+               <div class="col-md-12">
+               <table id="example" class="table table-striped" >
                 <thead>
                     <tr>
                         <th>Owner</th>
@@ -83,6 +86,8 @@
                 </tbody>
 
             </table>
+               </div>
+           </div>
         </div>
     </div>
 @endsection

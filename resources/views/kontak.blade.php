@@ -26,7 +26,7 @@
                 </form>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 mt-4">
                 <div class="ratio ratio-1x1">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.140245760138!2d106.82152684983129!3d-6.629497366626167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c60051a901e3%3A0xe70f7310b6bd6be6!2sDinas%20Lalu%20Lintas%20Dan%20Angkutan%20Jalan%20(Dllaj)%20Kota%20Bogor!5e0!3m2!1sid!2sid!4v1645168352579!5m2!1sid!2sid"

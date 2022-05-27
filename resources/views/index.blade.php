@@ -12,7 +12,7 @@
                     <p class="st fst-italic fs-3 fw-bold">Peta CCTV Lalu Lintas KOTA BOGOR</p>
                 </div>
                 <div class="col-md-12">
-                    <div class="ratio ratio-16x9">
+                    <div class="ratio ratio-4x3">
                         <div id="map"></div>
                     </div>
                 </div>
